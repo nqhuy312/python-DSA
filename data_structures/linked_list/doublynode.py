@@ -1,9 +1,9 @@
 """
-Linked List Singly Node class
+Linked List Doubly Node class
 =================
 
 Example on how to use Python built-in Linked List datatype
-    * Construct Linked List Singly Node Class
+    * Construct Linked List Doubly Node Class
     * Representation
 """
 
@@ -13,15 +13,17 @@ __email__ = 'thdkhoa1312@gmail.com'
 __date__ = '2022/05/21'
 __status__ = 'development'
 
+
 # =============================================================================
 
 
-class Node:
-    """Linked List Singly Node"""
+class DoublyNode:
+    """Linked List Doubly Node"""
 
-    def __init__(self, data, pointer=None):
+    def __init__(self, data, pointer=None, previous=None):
         self.__data = data
         self.__pointer = pointer
+        self.__previous = previous
 
     @property
     def data(self):
@@ -36,22 +38,30 @@ class Node:
         return self.__pointer
 
     @pointer.setter
-    def pointer(self, node):
-        self.__pointer = node
-        
+    def pointer(self, Node):
+        self.__pointer = Node
+
+    @property
+    def previous(self):
+        return self.__previous
+
+    @previous.setter
+    def previous(self, Node):
+        self.__previous = Node
+
     def __repr__(self):
-        return (f"<Node {self.__data}, {self.__pointer}>")
+        return (f"{self.__previous} <- Node, {self.__data} -> {self.__pointer}")
 
     __str__ = __repr__
 
 # =============================================================================
 
 if __name__ == "__main__":
-    head = Node(1)
-    first = Node(2)
-    second = Node(3)
+    head = DoublyNode(1)
+    first = DoublyNode(2)
+    second = DoublyNode(3)
 
-    head.pointer = first
+    head.pointer = first 
     first.pointer = second
 
     print(head)
