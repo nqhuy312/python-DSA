@@ -50,19 +50,11 @@ class DoublyNode:
         self.__previous = Node
 
     def __repr__(self):
-        return (f"{self.__previous} <- Node, {self.__data} -> {self.__pointer}")
+        #return (f"{self.__previous} <- Node, {self.__data} -> {self.__pointer}")
+        return (f" <- Node, {self.__data} ->")
 
     __str__ = __repr__
 
 # =============================================================================
 
-if __name__ == "__main__":
-    head = DoublyNode(1)
-    first = DoublyNode(2)
-    second = DoublyNode(3)
-
-    head.pointer = first 
-    first.pointer = second
-
-    print(head)
 

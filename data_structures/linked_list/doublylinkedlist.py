@@ -29,6 +29,7 @@ import functools
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
+
 def DEBUG(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -47,6 +48,10 @@ class DoublyLinkedList:
     def __init__(self, *data):
         self.__head, self.__tail, self.__len = self.build_list(data)
         print(self.__head, self.__tail)
+
+    @property
+    def head(self):
+        return self.__head
 
     @staticmethod
     def build_list(data):
@@ -69,13 +74,14 @@ class DoublyLinkedList:
             for val in data[1:]:
                 curr_node = DoublyNode(val)
                 tail.pointer = curr_node
+                curr_node.previous = tail
                 tail = curr_node
                 size += 1
 
         return head, tail, size
 
     def add_front(self, node):
-        """ Append new node to the left linked list
+        """ Append new node to the left doubly linked list
         Args:
             node (Node) : Node to apppend
 
@@ -84,21 +90,44 @@ class DoublyLinkedList:
 
         """
 
-        if not isinstance(node, Node):
+        if not isinstance(node, DoublyNode):
             return self
 
-        if not self.__head:
-            self.__head = node
-            self.__tail = node
+        node.pointer = self.__head
 
+        if self.__head:
+            self.__head.previous = node
+
+        self.__head = node
+        self.__len += 1
+
+        return self
+
+    def add_rear(self, node):
+        """ Append new node to linked list
+        Args:
+            node (Node) : Node to apppend
+
+        Returns:
+            (LinkedList) : return self to support cascade methods
+
+        """
+
+        if not isinstance(node, DoublyNode):
+            return self
+
+        node.previous = self.__tail
+
+        if self.__tail:
+            self.__tail.pointer = node
         else:
-            node.pointer = self.__head
             self.__head = node
 
+        self.__tail = node
         self.__len += 1
         return self
 
-    def add(self, idx, node):
+    def add_after(self, node):
         """ Append new node by the given index
         Args:
             node (Node) : Node to apppend
@@ -108,7 +137,7 @@ class DoublyLinkedList:
 
         """
 
-        if not isinstance(node, Node) or \
+        if not isinstance(node, DoublyNode) or \
                 not 0 <= idx < self.__len:
             return self
 
@@ -165,29 +194,6 @@ class DoublyLinkedList:
         self.__len -= 1
         return self
 
-    def add_rear(self, node):
-        """ Append new node to linked list
-        Args:
-            node (Node) : Node to apppend
-
-        Returns:
-            (LinkedList) : return self to support cascade methods
-
-        """
-
-        if not isinstance(node, Node):
-            return self
-
-        if not self.__head:
-            self.__head = node
-            self.__tail = node
-        else:
-            self.__tail.pointer = node
-            self.__tail = node
-
-        self.__len += 1
-        return self
-
     def __len__(self):
         return self.__len
 
@@ -199,62 +205,62 @@ class DoublyLinkedList:
 
 # =============================================================================
 
-@DEBUG
-def linkedlist_info(linked_list, message):
 
-    if not isinstance(linked_list, LinkedList):
+@DEBUG
+def doubply_linkedlist_info(linked_list, message):
+
+    if not isinstance(linked_list, DoublyLinkedList):
         raise Exception('Wrong type linked list')
 
     logging.info(message)
-    logging.info(f'Linked List: {linked_list}')
+    logging.info('Doubply Linked List')
+    length = len(linked_list)
+
+    run_node = linked_list.head
+
+    print(" "*79)
+    for idx in range(length):
+        # print(run_node.previous, run_node, run_node.pointer,  end="" if idx < length - 1 else '\n')
+        print(run_node.previous, run_node, run_node.pointer)
+        run_node = run_node.pointer
+
+    print(" "*79)
     logging.info(f'Length of Linked List: {len(linked_list)}')
 
-def test_linked_list():
-    linked_list = LinkedList(7, 8, 9)
 
-    four = Node(4)
-    zero = Node(0)
-    six = Node(6)
-    eleven = Node(11)
-    ten = Node(10)
-    one = Node(1)
-    two = Node(2)
+def test_doubly_linked_list():
+    linked_list = DoublyLinkedList(7, 8, 9)
 
-    linkedlist_info(linked_list,'Start---')
-
+    four = DoublyNode(4)
+    zero = DoublyNode(0)
+    six = DoublyNode(6)
+    eleven = DoublyNode(11)
+    ten = DoublyNode(10)
+    one = DoublyNode(1)
+    two = DoublyNode(2)
 
     linked_list.add_rear(four)
-    linkedlist_info(linked_list,'Append 4')
-
+    doubply_linkedlist_info(linked_list, 'Append 4')
 
     linked_list.add_front(zero)
-    linkedlist_info(linked_list,'Append Left 0')
+    doubply_linkedlist_info(linked_list, 'Append Left 0')
 
+    # linked_list.add(1, six)
+    # linkedlist_info(linked_list,'Add idx 1 - 6')
 
-    linked_list.add(1, six)
-    linkedlist_info(linked_list,'Add idx 1 - 6')
+    # linked_list.add(0, ten)
+    # linkedlist_info(linked_list,'Add idx 0 - 10')
 
+    # linked_list.add_rear(two)
+    # linkedlist_info(linked_list,'Append 2')
 
-    linked_list.add(0, ten)
-    linkedlist_info(linked_list,'Add idx 0 - 10')
+    # linked_list.add(len(linked_list)-1, eleven)
+    # linkedlist_info(linked_list,'Add idx len - 1 - 11')
 
+    # linked_list.delete(5)
+    # linkedlist_info(linked_list,'Delete index 5')
 
-    linked_list.add_rear(two)
-    linkedlist_info(linked_list,'Append 2')
-
-
-    linked_list.add(len(linked_list)-1, eleven)
-    linkedlist_info(linked_list,'Add idx len - 1 - 11')
-
-
-    linked_list.delete(5)
-    linkedlist_info(linked_list,'Delete index 5')
-
-
-    linked_list.add_rear(one)
-    linkedlist_info(linked_list,'Append 1')
-
-
+    # linked_list.add_rear(one) # linkedlist_info(linked_list,'Append 1')
 
 # =============================================================================
 
@@ -262,14 +268,11 @@ def test_linked_list():
 def main():
     """Main process for testing
     """
-    
-    test = DoublyLinkedList(1,2,3)
-    print(test)
-    #test_linked_list()
+
+    test_doubly_linked_list()
 
 
 # =============================================================================
-
 
 if __name__ == '__main__':
     logging.info('Task: Python Linked List\n')

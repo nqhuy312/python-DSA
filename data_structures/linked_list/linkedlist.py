@@ -87,15 +87,13 @@ class LinkedList:
         if not isinstance(node, Node):
             return self
 
+        node.pointer = self.__head
         if not self.__head:
-            self.__head = node
             self.__tail = node
 
-        else:
-            node.pointer = self.__head
-            self.__head = node
-
+        self.__head = node
         self.__len += 1
+
         return self
 
     def add(self, idx, node):
@@ -123,7 +121,6 @@ class LinkedList:
                     prev_node = prev_node.pointer
                 node.pointer = prev_node.pointer
                 prev_node.pointer = node
-
             else:
                 self.__head = node
                 self.__tail = node
@@ -178,13 +175,12 @@ class LinkedList:
         if not isinstance(node, Node):
             return self
 
-        if not self.__head:
-            self.__head = node
-            self.__tail = node
-        else:
+        if self.__tail:
             self.__tail.pointer = node
-            self.__tail = node
-
+        else:
+            self.__head = node  
+            
+        self.__tail = node
         self.__len += 1
         return self
 
