@@ -102,7 +102,7 @@ class DoublyLinkedList:
 
         self.__head = node
         self.__len += 1
-
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def add_rear(self, node):
@@ -127,6 +127,8 @@ class DoublyLinkedList:
 
         self.__tail = node
         self.__len += 1
+
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def add_after(self, prev_node, new_data):
@@ -151,8 +153,13 @@ class DoublyLinkedList:
             prev_node.pointer.previous = new_node
 
         prev_node.pointer = new_node
+
+        if prev_node == self.__tail:
+            self.__tail = new_node
+
         self.__len += 1
 
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def add_before(self, after_node, new_data):
@@ -177,40 +184,73 @@ class DoublyLinkedList:
             after_node.previous.pointer = new_node
 
         after_node.previous = new_node
+
+        if after_node == self.__head:
+            self.__head = new_node
+
         self.__len += 1
 
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
-    def delete(self, idx):
-        """ Delete node at given index
-        Args:
-            idx (int) : the node index
+    def pop_left(self):
+        """ Delete the head node of linked list
 
         Returns:
             (LinkedList) : return self to support cascade methods
 
         """
 
-        if not 0 <= idx < self.__len:
-            return self
+        delete_node = self.__head
+        self.__head.pointer.previous = self.__head.previous
+        self.__head = self.__head.pointer
+        
+        del delete_node
 
-        old_head = None
-        if idx == 0:
-            old_head = self.__head
-            self.__head = self.__head.pointer
-            del old_head
-        else:
-            prev_node = self.__head
-            for i in range(1, self.__len):
-                curr_node = prev_node.pointer
-                if idx == i:
-                    old_head = curr_node
-                    prev_node.pointer = curr_node.pointer
+        self.__len -= 1
 
-                self.__tail = prev_node
-                prev_node = prev_node.pointer
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
+        return self
+    
+    def pop(self):
+        """ Delete the head node of linked list
 
-        del old_head
+        Returns:
+            (LinkedList) : return self to support cascade methods
+
+        """
+
+        delete_node = self.__tail
+        self.__tail.previous.pointer = self.__tail.pointer
+        self.__tail = self.__tail.previous
+        
+        del delete_node
+
+        self.__len -= 1
+        print(f'Head: {self.__head} - Tail: {self.__tail}')
+        return self
+
+    def pop_middle(self):
+        """ Delete the head node of linked list
+
+        Returns:
+            (LinkedList) : return self to support cascade methods
+
+        """
+        middle = int(self.__len / 2)
+
+        curr_node = self.__head
+        for _ in range(middle):
+            curr_node = curr_node.pointer
+
+        print('Middle Node:', curr_node)
+        curr_node.previous.pointer = curr_node.pointer
+
+        if curr_node.pointer is not None:
+            curr_node.pointer.previous = curr_node.previous
+        
+        del curr_node
+
         self.__len -= 1
         return self
 
@@ -269,13 +309,22 @@ def test_doubly_linked_list():
     for _ in range(len(linked_list)):
         if curr_node.data  == 4:
             linked_list.add_after(curr_node, 3)
-            doubply_linkedlist_info(linked_list, 'Insert 3 after node 9')
+            doubply_linkedlist_info(linked_list, 'Insert 3 after node 4')
         
         if curr_node.data == 8:
             linked_list.add_before(curr_node, 99)
             doubply_linkedlist_info(linked_list, 'Insert 99 before node 8')
         curr_node = curr_node.pointer
 
+    linked_list.pop_left()
+    doubply_linkedlist_info(linked_list, 'Pop left')
+
+    linked_list.pop()
+    doubply_linkedlist_info(linked_list, 'Pop')
+
+    linked_list.pop_middle()
+    doubply_linkedlist_info(linked_list, 'Pop middle')
+    
     # linked_list.add(1, six)
     # linkedlist_info(linked_list,'Add idx 1 - 6')
 
