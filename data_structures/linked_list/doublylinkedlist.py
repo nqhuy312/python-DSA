@@ -7,6 +7,8 @@ Example on how to use Python built-in Linked List datatype
     * Append to linked list (from left/right/at given index)
     * Delete a node at given index
     * Representation
+
+
 """
 
 
@@ -127,8 +129,8 @@ class DoublyLinkedList:
         self.__len += 1
         return self
 
-    def add_after(self, node):
-        """ Append new node by the given index
+    def add_after(self, prev_node, new_data):
+        """ Append new node after the given index
         Args:
             node (Node) : Node to apppend
 
@@ -137,27 +139,45 @@ class DoublyLinkedList:
 
         """
 
-        if not isinstance(node, DoublyNode) or \
-                not 0 <= idx < self.__len:
+        if not isinstance(prev_node, DoublyNode):
             return self
 
-        if idx == 0:
-            self.add_front(node)
-        elif idx == self.__len - 1:
-            self.add_rear(node)
-        else:
-            if self.__head:
-                prev_node = self.__head
-                for _ in range(idx-1):
-                    prev_node = prev_node.pointer
-                node.pointer = prev_node.pointer
-                prev_node.pointer = node
+        new_node = DoublyNode(new_data)
 
-            else:
-                self.__head = node
-                self.__tail = node
+        new_node.pointer = prev_node.pointer
+        new_node.previous = prev_node
 
-            self.__len += 1
+        if prev_node.pointer is not None:
+            prev_node.pointer.previous = new_node
+
+        prev_node.pointer = new_node
+        self.__len += 1
+
+        return self
+
+    def add_before(self, after_node, new_data):
+        """ Append new node after the given index
+        Args:
+            node (Node) : Node to apppend
+
+        Returns:
+            (LinkedList) : return self to support cascade methods
+
+        """
+
+        if not isinstance(after_node, DoublyNode):
+            return self
+
+        new_node = DoublyNode(new_data)
+
+        new_node.pointer = after_node
+        new_node.previous = after_node.previous
+
+        if after_node.previous is not None:
+            after_node.previous.pointer = new_node
+
+        after_node.previous = new_node
+        self.__len += 1
 
         return self
 
@@ -244,6 +264,17 @@ def test_doubly_linked_list():
 
     linked_list.add_front(zero)
     doubply_linkedlist_info(linked_list, 'Append Left 0')
+
+    curr_node = linked_list.head
+    for _ in range(len(linked_list)):
+        if curr_node.data  == 4:
+            linked_list.add_after(curr_node, 3)
+            doubply_linkedlist_info(linked_list, 'Insert 3 after node 9')
+        
+        if curr_node.data == 8:
+            linked_list.add_before(curr_node, 99)
+            doubply_linkedlist_info(linked_list, 'Insert 99 before node 8')
+        curr_node = curr_node.pointer
 
     # linked_list.add(1, six)
     # linkedlist_info(linked_list,'Add idx 1 - 6')
