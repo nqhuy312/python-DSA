@@ -4,8 +4,8 @@ Doubly Linked List class
 
 Example on how to use Python built-in Linked List datatype
     * Construct an empty linked list (or from another linked list)
-    * Append to linked list (from left/right/at given index)
-    * Delete a node at given index
+    * Append to linked list (from left/right/after and before a node)
+    * Delete a node of linked list(from left/right/middle)
     * Representation
 
 
@@ -49,7 +49,6 @@ class DoublyLinkedList:
 
     def __init__(self, *data):
         self.__head, self.__tail, self.__len = self.build_list(data)
-        print(self.__head, self.__tail)
 
     @property
     def head(self):
@@ -102,11 +101,11 @@ class DoublyLinkedList:
 
         self.__head = node
         self.__len += 1
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
+
         return self
 
     def add_rear(self, node):
-        """ Append new node to linked list
+        """ Append new node to doubly linked list
         Args:
             node (Node) : Node to apppend
 
@@ -128,13 +127,13 @@ class DoublyLinkedList:
         self.__tail = node
         self.__len += 1
 
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def add_after(self, prev_node, new_data):
-        """ Append new node after the given index
+        """ Append new node after the given node 
         Args:
-            node (Node) : Node to apppend
+            prev_node(Node): previous node of the new node
+            new_data(int): data of the new node
 
         Returns:
             (LinkedList) : return self to support cascade methods
@@ -158,14 +157,13 @@ class DoublyLinkedList:
             self.__tail = new_node
 
         self.__len += 1
-
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def add_before(self, after_node, new_data):
-        """ Append new node after the given index
+        """ Append new node before the given node 
         Args:
-            node (Node) : Node to apppend
+            after_node (Node) : after node of the new node
+            new_data(int): data of the new node
 
         Returns:
             (LinkedList) : return self to support cascade methods
@@ -189,8 +187,6 @@ class DoublyLinkedList:
             self.__head = new_node
 
         self.__len += 1
-
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def pop_left(self):
@@ -208,12 +204,10 @@ class DoublyLinkedList:
         del delete_node
 
         self.__len -= 1
-
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
     
     def pop(self):
-        """ Delete the head node of linked list
+        """ Delete the last node of linked list
 
         Returns:
             (LinkedList) : return self to support cascade methods
@@ -227,11 +221,10 @@ class DoublyLinkedList:
         del delete_node
 
         self.__len -= 1
-        print(f'Head: {self.__head} - Tail: {self.__tail}')
         return self
 
     def pop_middle(self):
-        """ Delete the head node of linked list
+        """ Delete the middle node of linked list
 
         Returns:
             (LinkedList) : return self to support cascade methods
@@ -243,7 +236,6 @@ class DoublyLinkedList:
         for _ in range(middle):
             curr_node = curr_node.pointer
 
-        print('Middle Node:', curr_node)
         curr_node.previous.pointer = curr_node.pointer
 
         if curr_node.pointer is not None:
@@ -273,31 +265,26 @@ def doubply_linkedlist_info(linked_list, message):
         raise Exception('Wrong type linked list')
 
     logging.info(message)
-    logging.info('Doubply Linked List')
     length = len(linked_list)
-
     run_node = linked_list.head
 
     print(" "*79)
-    for idx in range(length):
-        # print(run_node.previous, run_node, run_node.pointer,  end="" if idx < length - 1 else '\n')
-        print(run_node.previous, run_node, run_node.pointer)
+    print(f" {run_node.previous}", end='')
+    for _ in range(length):
+        print(run_node, end='')
         run_node = run_node.pointer
 
+    print(f" {run_node}")
     print(" "*79)
     logging.info(f'Length of Linked List: {len(linked_list)}')
 
 
 def test_doubly_linked_list():
     linked_list = DoublyLinkedList(7, 8, 9)
+    doubply_linkedlist_info(linked_list, 'Start')
 
     four = DoublyNode(4)
     zero = DoublyNode(0)
-    six = DoublyNode(6)
-    eleven = DoublyNode(11)
-    ten = DoublyNode(10)
-    one = DoublyNode(1)
-    two = DoublyNode(2)
 
     linked_list.add_rear(four)
     doubply_linkedlist_info(linked_list, 'Append 4')
@@ -324,23 +311,7 @@ def test_doubly_linked_list():
 
     linked_list.pop_middle()
     doubply_linkedlist_info(linked_list, 'Pop middle')
-    
-    # linked_list.add(1, six)
-    # linkedlist_info(linked_list,'Add idx 1 - 6')
 
-    # linked_list.add(0, ten)
-    # linkedlist_info(linked_list,'Add idx 0 - 10')
-
-    # linked_list.add_rear(two)
-    # linkedlist_info(linked_list,'Append 2')
-
-    # linked_list.add(len(linked_list)-1, eleven)
-    # linkedlist_info(linked_list,'Add idx len - 1 - 11')
-
-    # linked_list.delete(5)
-    # linkedlist_info(linked_list,'Delete index 5')
-
-    # linked_list.add_rear(one) # linkedlist_info(linked_list,'Append 1')
 
 # =============================================================================
 
@@ -355,7 +326,7 @@ def main():
 # =============================================================================
 
 if __name__ == '__main__':
-    logging.info('Task: Python Linked List\n')
+    logging.info('Task: Python Doubly Linked List\n')
 
     main()
 
