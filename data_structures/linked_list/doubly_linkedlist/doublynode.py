@@ -1,6 +1,6 @@
 """
 Linked List Doubly Node class
-=================
+=============================
 
 Example on how to use Python built-in Linked List datatype
     * Construct Linked List Doubly Node Class
@@ -50,11 +50,6 @@ class DoublyNode:
         self.__previous = Node
 
     def __repr__(self):
-        #return (f"{self.__previous} <- Node, {self.__data} -> {self.__pointer}")
         return (f" <- Node, {self.__data} ->")
 
     __str__ = __repr__
-
-# =============================================================================
-
-

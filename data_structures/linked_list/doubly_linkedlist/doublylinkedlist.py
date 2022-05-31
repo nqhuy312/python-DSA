@@ -1,6 +1,6 @@
 """
 Doubly Linked List class
-=================
+========================
 
 Example on how to use Python built-in Linked List datatype
     * Construct an empty linked list (or from another linked list)
