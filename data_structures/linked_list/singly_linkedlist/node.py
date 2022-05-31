@@ -1,6 +1,6 @@
 """
 Linked List Singly Node class
-=================
+=============================
 
 Example on how to use Python built-in Linked List datatype
     * Construct Linked List Singly Node Class
@@ -12,6 +12,7 @@ __author__ = 'Khoa Tran'
 __email__ = 'thdkhoa1312@gmail.com'
 __date__ = '2022/05/21'
 __status__ = 'development'
+
 
 # =============================================================================
 
@@ -44,7 +45,9 @@ class Node:
 
     __str__ = __repr__
 
+
 # =============================================================================
+
 
 if __name__ == "__main__":
     head = Node(1)
@@ -55,4 +58,3 @@ if __name__ == "__main__":
     first.pointer = second
 
     print(head)
-

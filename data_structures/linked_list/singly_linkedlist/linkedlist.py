@@ -46,7 +46,6 @@ class LinkedList:
 
     def __init__(self, *data):
         self.__head, self.__tail, self.__len = self.build_list(data)
-        print(self.__head, self.__tail)
 
     @staticmethod
     def build_list(data):
@@ -75,7 +74,7 @@ class LinkedList:
         return head, tail, size
 
     def add_front(self, node):
-        """ Append new node to the left linked list
+        """ Append new node to the left of linked list
         Args:
             node (Node) : Node to apppend
 
@@ -100,31 +99,31 @@ class LinkedList:
         """ Append new node by the given index
         Args:
             node (Node) : Node to apppend
+            idx (int): index of the new node
 
         Returns:
             (LinkedList) : return self to support cascade methods
 
         """
 
-        if not isinstance(node, Node) or \
-                not 0 <= idx < self.__len:
+        if not isinstance(node, Node):
             return self
 
-        if idx == 0:
-            self.add_front(node)
-        elif idx == self.__len - 1:
-            self.add_rear(node)
-        else:
-            if self.__head:
+        if self.__head:
+            if idx == 0:
+                self.add_front(node)
+            elif idx == self.__len - 1:
+                self.add_rear(node)
+            elif 0 <= idx < self.__len:
                 prev_node = self.__head
                 for _ in range(idx-1):
                     prev_node = prev_node.pointer
                 node.pointer = prev_node.pointer
                 prev_node.pointer = node
-            else:
-                self.__head = node
-                self.__tail = node
-
+                self.__len += 1
+        else:
+            self.__head = node
+            self.__tail = node
             self.__len += 1
 
         return self
@@ -145,8 +144,7 @@ class LinkedList:
         old_head = None
         if idx == 0:
             old_head = self.__head
-            self.__head = self.__head.pointer
-            del old_head
+            self.__head = self.__head.pointer   
         else:
             prev_node = self.__head
             for i in range(1, self.__len):
@@ -195,6 +193,7 @@ class LinkedList:
 
 # =============================================================================
 
+
 @DEBUG
 def linkedlist_info(linked_list, message):
 
@@ -206,7 +205,7 @@ def linkedlist_info(linked_list, message):
     logging.info(f'Length of Linked List: {len(linked_list)}')
 
 def test_linked_list():
-    linked_list = LinkedList(7, 8, 9)
+    linked_list = LinkedList()
 
     four = Node(4)
     zero = Node(0)
@@ -218,6 +217,8 @@ def test_linked_list():
 
     linkedlist_info(linked_list,'Start---')
 
+    linked_list.add(1, six)
+    linkedlist_info(linked_list,'Add idx 1 - 6')
 
     linked_list.add_rear(four)
     linkedlist_info(linked_list,'Append 4')
@@ -225,11 +226,6 @@ def test_linked_list():
 
     linked_list.add_front(zero)
     linkedlist_info(linked_list,'Append Left 0')
-
-
-    linked_list.add(1, six)
-    linkedlist_info(linked_list,'Add idx 1 - 6')
-
 
     linked_list.add(0, ten)
     linkedlist_info(linked_list,'Add idx 0 - 10')
