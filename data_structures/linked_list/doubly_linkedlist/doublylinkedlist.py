@@ -196,14 +196,15 @@ class DoublyLinkedList:
             (LinkedList) : return self to support cascade methods
 
         """
-
-        delete_node = self.__head
-        self.__head.pointer.previous = self.__head.previous
-        self.__head = self.__head.pointer
         
-        del delete_node
+        if self.__head:
+            delete_node = self.__head
+            self.__head.pointer.previous = self.__head.previous
+            self.__head = self.__head.pointer
+            
+            del delete_node
 
-        self.__len -= 1
+            self.__len -= 1
         return self
     
     def pop(self):
@@ -214,13 +215,14 @@ class DoublyLinkedList:
 
         """
 
-        delete_node = self.__tail
-        self.__tail.previous.pointer = self.__tail.pointer
-        self.__tail = self.__tail.previous
-        
-        del delete_node
+        if self.__head:
+            delete_node = self.__tail
+            self.__tail.previous.pointer = self.__tail.pointer
+            self.__tail = self.__tail.previous
+            
+            del delete_node
 
-        self.__len -= 1
+            self.__len -= 1
         return self
 
     def pop_middle(self):
@@ -230,20 +232,22 @@ class DoublyLinkedList:
             (LinkedList) : return self to support cascade methods
 
         """
-        middle = int(self.__len / 2)
 
-        curr_node = self.__head
-        for _ in range(middle):
-            curr_node = curr_node.pointer
+        if self.__head:
+            middle = int(self.__len / 2)
 
-        curr_node.previous.pointer = curr_node.pointer
+            curr_node = self.__head
+            for _ in range(middle):
+                curr_node = curr_node.pointer
 
-        if curr_node.pointer is not None:
-            curr_node.pointer.previous = curr_node.previous
-        
-        del curr_node
+            curr_node.previous.pointer = curr_node.pointer
 
-        self.__len -= 1
+            if curr_node.pointer is not None:
+                curr_node.pointer.previous = curr_node.previous
+            
+            del curr_node
+
+            self.__len -= 1
         return self
 
     def __len__(self):
