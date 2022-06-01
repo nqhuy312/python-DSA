@@ -199,8 +199,13 @@ class DoublyLinkedList:
         
         if self.__head:
             delete_node = self.__head
-            self.__head.pointer.previous = self.__head.previous
+
+            if self.__head.pointer:
+                self.__head.pointer.previous = self.__head.previous
             self.__head = self.__head.pointer
+
+            if not self.__head:
+                self.__tail = None
             
             del delete_node
 
@@ -217,8 +222,13 @@ class DoublyLinkedList:
 
         if self.__head:
             delete_node = self.__tail
-            self.__tail.previous.pointer = self.__tail.pointer
+
+            if self.__tail.previous:
+                self.__tail.previous.pointer = self.__tail.pointer
             self.__tail = self.__tail.previous
+
+            if not self.__tail:
+                self.__head = None
             
             del delete_node
 
@@ -236,16 +246,16 @@ class DoublyLinkedList:
         if self.__head:
             middle = int(self.__len / 2)
 
-            curr_node = self.__head
+            delete_node = self.__head
             for _ in range(middle):
-                curr_node = curr_node.pointer
+                delete_node = delete_node.pointer
 
-            curr_node.previous.pointer = curr_node.pointer
+            delete_node.previous.pointer = delete_node.pointer
 
-            if curr_node.pointer is not None:
-                curr_node.pointer.previous = curr_node.previous
+            if delete_node.pointer is not None:
+                delete_node.pointer.previous = delete_node.previous
             
-            del curr_node
+            del delete_node
 
             self.__len -= 1
         return self
