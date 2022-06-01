@@ -78,17 +78,27 @@ class Deque:
 
         return self
 
-    def pop():
+    def pop(self):
         pass
 
-    def popleft():
-        pass
+    def popleft(self):
+        if self.__head:
+            old_head = self.__head
+            self.__head = self.__head.pointer
+
+            if not self.__head:
+                self.__tail = None
+            
+            del old_head
+
+            self.__len -= 1
+        return self
 
     def __len__(self):
         return self.__len
 
     def __repr__(self):
-        return(f"deque([{self.__head.__repr__()})]")
+        return(f"deque([{self.__head.__repr__() if self.__head else ''}])")
 
     __str__ = __repr__
 
@@ -100,4 +110,8 @@ if __name__ == "__main__":
     deque = Deque([])
     deque.append('word !!')
     deque.appendleft('hello')
+    deque.popleft()
+    deque.popleft()
+
     print(deque)
+    # print(deque.head, deque.tail)
