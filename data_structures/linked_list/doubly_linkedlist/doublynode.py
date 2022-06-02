@@ -2,7 +2,7 @@
 Linked List Doubly Node class
 =============================
 
-Example on how to use Python built-in Linked List datatype
+Example on how to use Python Doubly Linked List datatype
     * Construct Linked List Doubly Node Class
     * Representation
 """
