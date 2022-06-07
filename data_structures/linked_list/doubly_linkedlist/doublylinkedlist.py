@@ -7,8 +7,6 @@ Example on how to use Python Doubly Linked List datatype
     * Append to linked list (from left/right/after and before a node)
     * Delete a node of linked list(from left/right/middle)
     * Representation
-
-
 """
 
 
@@ -97,6 +95,7 @@ class DoublyLinkedList:
         node.pointer = self.__head
 
         if self.__head:
+            node.pointer = self.__head
             self.__head.previous = node
 
         self.__head = node
@@ -120,6 +119,7 @@ class DoublyLinkedList:
         node.previous = self.__tail
 
         if self.__tail:
+            node.previous = self.__tail
             self.__tail.pointer = node
         else:
             self.__head = node
@@ -199,16 +199,10 @@ class DoublyLinkedList:
         
         if self.__head:
             delete_node = self.__head
-
-            if self.__head.pointer:
-                self.__head.pointer.previous = self.__head.previous
             self.__head = self.__head.pointer
-
-            if not self.__head:
-                self.__tail = None
+            self.__head.previous = None
             
             del delete_node
-
             self.__len -= 1
         return self
     
@@ -222,14 +216,8 @@ class DoublyLinkedList:
 
         if self.__head:
             delete_node = self.__tail
-
-            if self.__tail.previous:
-                self.__tail.previous.pointer = self.__tail.pointer
             self.__tail = self.__tail.previous
-
-            if not self.__tail:
-                self.__head = None
-            
+            self.__tail.pointer = None
             del delete_node
 
             self.__len -= 1
@@ -245,13 +233,12 @@ class DoublyLinkedList:
 
         if self.__head:
             middle = int(self.__len / 2)
-
             delete_node = self.__head
-            for _ in range(middle):
-                delete_node = delete_node.pointer
-
-            delete_node.previous.pointer = delete_node.pointer
-
+            if self.__len > 1:
+                for _ in range(middle):
+                    delete_node = delete_node.pointer
+            if delete_node.previous is not None:
+                delete_node.previous.pointer = delete_node.pointer
             if delete_node.pointer is not None:
                 delete_node.pointer.previous = delete_node.previous
             
@@ -282,11 +269,12 @@ def doubply_linkedlist_info(linked_list, message):
     length = len(linked_list)
     run_node = linked_list.head
 
-    print(" "*79)
-    print(f" {run_node.previous}", end='')
-    for _ in range(length):
-        print(run_node, end='')
-        run_node = run_node.pointer
+    if length:
+      print(" "*79)
+      print(f" {run_node.previous}", end='')
+      for _ in range(length):
+          print(run_node, end='')
+          run_node = run_node.pointer
 
     print(f" {run_node}")
     print(" "*79)
