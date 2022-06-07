@@ -1,9 +1,9 @@
 """
-Linked List Singly Node class
-=================
+Deque Node Class
+================
 
-Example on how to use Python built-in Linked List datatype
-    * Construct Linked List Singly Node Class
+Implement linked list node for Deque
+    * Construct doubly linked List node for Deque
     * Representation
 """
 
@@ -13,16 +13,17 @@ __email__ = 'thdkhoa1312@gmail.com'
 __date__ = '2022/05/30'
 __status__ = 'development'
 
+
 # =============================================================================
 
 
 class DequeNode:
-    """Linked List Singly Node"""
+    """Linked List Doubly Node for Deque"""
 
-    def __init__(self, data, pointer=None):
+    def __init__(self, data, pointer=None, previous=None):
         self.__data = data
         self.__pointer = pointer
-        
+        self.__previous = previous
 
     @property
     def data(self):
@@ -37,8 +38,16 @@ class DequeNode:
         return self.__pointer
 
     @pointer.setter
-    def pointer(self, node):
-        self.__pointer = node
+    def pointer(self, Node):
+        self.__pointer = Node
+
+    @property
+    def previous(self):
+        return self.__previous
+
+    @previous.setter
+    def previous(self, Node):
+        self.__previous = Node
 
     def __repr__(self):
         self.__comma = f', {self.__pointer}' if self.__pointer else ''
@@ -46,15 +55,3 @@ class DequeNode:
 
     __str__ = __repr__
 
-# =============================================================================
-
-
-if __name__ == "__main__":
-    head = DequeNode(1)
-    first = DequeNode(2)
-    second = DequeNode(3)
-
-    head.pointer = first
-    first.pointer = second
-
-    print(head)
