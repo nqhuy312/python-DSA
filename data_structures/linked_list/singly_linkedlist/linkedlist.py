@@ -1,8 +1,8 @@
 """
-Linked List class
-=================
+Singly Linked List class
+========================
 
-Example on how to use Python built-in Linked List datatype
+Example on how to use Singly Python Linked List datatype
     * Construct an empty linked list (or from another linked list)
     * Append to linked list (from left/right/at given index)
     * Delete a node at given index
@@ -196,7 +196,6 @@ class LinkedList:
 
 @DEBUG
 def linkedlist_info(linked_list, message):
-
     if not isinstance(linked_list, LinkedList):
         raise Exception('Wrong type linked list')
 

@@ -2,7 +2,7 @@
 Doubly Linked List class
 ========================
 
-Example on how to use Python built-in Linked List datatype
+Example on how to use Python Doubly Linked List datatype
     * Construct an empty linked list (or from another linked list)
     * Append to linked list (from left/right/after and before a node)
     * Delete a node of linked list(from left/right/middle)

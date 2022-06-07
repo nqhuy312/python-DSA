@@ -2,7 +2,7 @@
 Linked List Singly Node class
 =============================
 
-Example on how to use Python built-in Linked List datatype
+Example on how to use Singly Python Linked List datatype
     * Construct Linked List Singly Node Class
     * Representation
 """
