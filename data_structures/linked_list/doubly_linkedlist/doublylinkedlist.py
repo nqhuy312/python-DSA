@@ -196,16 +196,16 @@ class DoublyLinkedList:
             (LinkedList) : return self to support cascade methods
 
         """
-        
+
         if self.__head:
             delete_node = self.__head
             self.__head = self.__head.pointer
             self.__head.previous = None
-            
+
             del delete_node
             self.__len -= 1
         return self
-    
+
     def pop(self):
         """ Delete the last node of linked list
 
@@ -241,7 +241,7 @@ class DoublyLinkedList:
                 delete_node.previous.pointer = delete_node.pointer
             if delete_node.pointer is not None:
                 delete_node.pointer.previous = delete_node.previous
-            
+
             del delete_node
 
             self.__len -= 1
@@ -270,11 +270,11 @@ def doubply_linkedlist_info(linked_list, message):
     run_node = linked_list.head
 
     if length:
-      print(" "*79)
-      print(f" {run_node.previous}", end='')
-      for _ in range(length):
-          print(run_node, end='')
-          run_node = run_node.pointer
+        print(" "*79)
+        print(f" {run_node.previous}", end='')
+        for _ in range(length):
+            print(run_node, end='')
+            run_node = run_node.pointer
 
     print(f" {run_node}")
     print(" "*79)
@@ -296,10 +296,10 @@ def test_doubly_linked_list():
 
     curr_node = linked_list.head
     for _ in range(len(linked_list)):
-        if curr_node.data  == 4:
+        if curr_node.data == 4:
             linked_list.add_after(curr_node, 3)
             doubply_linkedlist_info(linked_list, 'Insert 3 after node 4')
-        
+
         if curr_node.data == 8:
             linked_list.add_before(curr_node, 99)
             doubply_linkedlist_info(linked_list, 'Insert 99 before node 8')
@@ -326,6 +326,7 @@ def main():
 
 
 # =============================================================================
+
 
 if __name__ == '__main__':
     logging.info('Task: Python Doubly Linked List\n')
