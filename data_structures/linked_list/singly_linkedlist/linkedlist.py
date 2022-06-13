@@ -246,7 +246,6 @@ def test_linked_list():
     linkedlist_info(linked_list,'Append 1')
 
 
-
 # =============================================================================
 
 
